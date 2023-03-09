@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment } from "react";
+import { DeleteUser } from "./components/DeleteUser";
+import { EditCreate } from "./components/Edit";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { Pagination } from "./components/Pagination";
+import { Search } from "./components/Search";
+import { Table } from "./components/Table";
+import { UserDetails } from "./components/UserDetails";
+
+// import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Fragment>
+            <body>
+                <Header />
+                <main class="main">
+                    <section class="card users-container">
+                        <Search />
+
+                        <Table />
+
+                        <button class="btn-add btn">Add new user</button>
+
+                        <Pagination />
+                    </section>
+
+                    {/* <!-- User details component  --> */}
+                    {/* <UserDetails/> */}
+
+                    {/* <!-- Create/Edit Form component  -->*/}
+                    {/* <EditCreate/> */}
+                          
+
+                    {/* <!-- Delete user component  -->*/}
+                      {/* <DeleteUser/> */}
+
+                </main>
+                  <Footer/>
+            </body>
+        </Fragment>
+    );
 }
 
 export default App;
