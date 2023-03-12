@@ -1,24 +1,24 @@
 export function Pagination() {
     return (
-        <div class="pagination position">
-            <div class="limits">
+        <div className="pagination position">
+            <div className="limits">
                 <span>Items per page:</span>
-                <select name="limit" class="limit" value="5">
+                <select name="limit" className="limit" value="5">
                     <option value="5">5</option>
                     <option value="5">10</option>
                     <option value="5">15</option>
                     <option value="5">20</option>
                 </select>
             </div>
-            <p class="pages">1 - 1 of 1</p>
-            <div class="actions">
-                <button class="btn" title="First Page">
+            <p className="pages">1 - 1 of 1</p>
+            <div className="actions">
+                <button className="btn" title="First Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
                         data-prefix="fas"
                         data-icon="angles-left"
-                        class="svg-inline--fa fa-angles-left"
+                        className="svg-inline--fa fa-angles-left"
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"
@@ -30,13 +30,13 @@ export function Pagination() {
                     </svg>
                 </button>
 
-                <button class="btn" title="Previous Page">
+                <button className="btn" title="Previous Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
                         data-prefix="fas"
                         data-icon="angle-left"
-                        class="svg-inline--fa fa-angle-left"
+                        className="svg-inline--fa fa-angle-left"
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 256 512"
@@ -47,13 +47,13 @@ export function Pagination() {
                         ></path>
                     </svg>
                 </button>
-                <button class="btn" title="Next Page">
+                <button className="btn" title="Next Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
                         data-prefix="fas"
                         data-icon="angle-right"
-                        class="svg-inline--fa fa-angle-right"
+                        className="svg-inline--fa fa-angle-right"
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 256 512"
@@ -65,13 +65,13 @@ export function Pagination() {
                     </svg>
                 </button>
 
-                <button class="btn" title="Last Page">
+                <button className="btn" title="Last Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
                         data-prefix="fas"
                         data-icon="angles-right"
-                        class="svg-inline--fa fa-angles-right"
+                        className="svg-inline--fa fa-angles-right"
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"
