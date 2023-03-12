@@ -3,11 +3,12 @@ import { useState } from "react";
 import { UserDetails } from "../UserDetails";
 import * as userService from "../../services/userService";
 import { EditCreate } from "../EditCreate";
+import { DeleteUser } from "../DeleteUser";
 
-export function Table({ users, onUserCreate }) {
+export function Table({ users, onUserCreate, onUserDelete }) {
     const [selectedUser, setSelectedUser] = useState(null);
+    const [showDeleteUser, setShowDeleteUser] = useState(false);
     const [showAddUser, setShowAddUser] = useState(false);
-
     const onInfoClick = async (userId) => {
         const user = await userService.getOne(userId);
 
@@ -17,6 +18,7 @@ export function Table({ users, onUserCreate }) {
     const onClose = () => {
         setSelectedUser(null);
         setShowAddUser(false);
+        setShowDeleteUser(null);
     };
 
     const OnUserAddClick = () => {
@@ -28,10 +30,23 @@ export function Table({ users, onUserCreate }) {
         setShowAddUser(false);
     };
 
+    const onDeleteClick = (userId) => {
+        setShowDeleteUser(userId);
+    };
+
+    const onDeleteHandler = () =>{
+        onUserDelete(showDeleteUser);
+        onClose();
+    }
+
     return (
         <>
             {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
             {showAddUser && <EditCreate onClose={onClose} onUserCreate={onUserCreateHandler} />}
+            {showDeleteUser && (
+                <DeleteUser onClose={onClose} onDelete={onDeleteHandler} />
+            )}
+
             <div className="table-wrapper">
                 {/* <div className="loading-shade">
                 <div className="spinner"></div>
@@ -193,7 +208,12 @@ export function Table({ users, onUserCreate }) {
                     </thead>
                     <tbody>
                         {users.map((user) => (
-                            <User key={user._id} {...user} onInfoClick={onInfoClick} />
+                            <User
+                                key={user._id}
+                                {...user}
+                                onInfoClick={onInfoClick}
+                                onDeleteClick={onDeleteClick}
+                            />
                         ))}
                     </tbody>
                 </table>

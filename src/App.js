@@ -34,10 +34,14 @@ function App() {
 
         const createdUser = await userService.create(data);
 
-        setUsers(state => [...state, createdUser]);
+        setUsers((state) => [...state, createdUser]);
+    };
 
+    const onUserDelete = async (userId) => {
+        await userService.deleteUser(userId);
+
+        setUsers((state) => state.filter((x) => x._id !== userId));
         
-
     };
 
     return (
@@ -47,7 +51,7 @@ function App() {
                 <section className="card users-container">
                     <Search />
 
-                    <Table users={users} onUserCreate={onUserCreate} />
+                    <Table users={users} onUserCreate={onUserCreate} onUserDelete={onUserDelete} />
 
                     <Pagination />
                 </section>
