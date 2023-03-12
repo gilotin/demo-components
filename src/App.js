@@ -2,7 +2,7 @@ import * as userService from "./services/userService";
 
 import { Fragment, useEffect, useState } from "react";
 import { DeleteUser } from "./components/DeleteUser";
-import { EditCreate } from "./components/Edit";
+import { EditCreate } from "./components/EditCreate";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Pagination } from "./components/Pagination";
@@ -25,6 +25,21 @@ function App() {
             });
     }, []);
 
+    const onUserCreate = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        const data = Object.fromEntries(formData);
+
+        const createdUser = await userService.create(data);
+
+        setUsers(state => [...state, createdUser]);
+
+        
+
+    };
+
     return (
         <Fragment>
             <Header />
@@ -32,15 +47,10 @@ function App() {
                 <section className="card users-container">
                     <Search />
 
-                    <Table users = {users}/>
-
-                    <button className="btn-add btn">Add new user</button>
+                    <Table users={users} onUserCreate={onUserCreate} />
 
                     <Pagination />
                 </section>
-
-                {/* <!-- User details component  --> */}
-                {/* <UserDetails/> */}
 
                 {/* <!-- Create/Edit Form component  -->*/}
                 {/* <EditCreate/> */}
