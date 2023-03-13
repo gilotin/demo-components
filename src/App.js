@@ -41,24 +41,39 @@ function App() {
         await userService.deleteUser(userId);
 
         setUsers((state) => state.filter((x) => x._id !== userId));
-        
+    };
+
+    const onUserUpdateSubmit = async (e, userId) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        const data = Object.fromEntries(formData);
+
+        const updatedUser = await userService.update(userId, data);
+
+        setUsers((state) => state.map((x) => (x._id === userId ? updatedUser : x)));
     };
 
     return (
         <Fragment>
             <Header />
             <main className="main">
+                onUserUpdateSubmit
                 <section className="card users-container">
                     <Search />
 
-                    <Table users={users} onUserCreate={onUserCreate} onUserDelete={onUserDelete} />
+                    <Table
+                        users={users}
+                        onUserCreate={onUserCreate}
+                        onUserUpdateSubmit={onUserUpdateSubmit}
+                        onUserDelete={onUserDelete}
+                    />
 
                     <Pagination />
                 </section>
-
                 {/* <!-- Create/Edit Form component  -->*/}
                 {/* <EditCreate/> */}
-
                 {/* <!-- Delete user component  -->*/}
                 {/* <DeleteUser/> */}
             </main>

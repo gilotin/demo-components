@@ -5,10 +5,12 @@ import * as userService from "../../services/userService";
 import { EditCreate } from "../EditCreate";
 import { DeleteUser } from "../DeleteUser";
 
-export function Table({ users, onUserCreate, onUserDelete }) {
+export function Table({ users, onUserCreate, onUserDelete, onUserUpdateSubmit }) {
     const [selectedUser, setSelectedUser] = useState(null);
-    const [showDeleteUser, setShowDeleteUser] = useState(false);
+    const [showDeleteUser, setShowDeleteUser] = useState(null);
+    const [showEditedUser, setShowEditedUser] = useState(null);
     const [showAddUser, setShowAddUser] = useState(false);
+
     const onInfoClick = async (userId) => {
         const user = await userService.getOne(userId);
 
@@ -19,6 +21,7 @@ export function Table({ users, onUserCreate, onUserDelete }) {
         setSelectedUser(null);
         setShowAddUser(false);
         setShowDeleteUser(null);
+        setShowEditedUser(null);
     };
 
     const OnUserAddClick = () => {
@@ -30,21 +33,37 @@ export function Table({ users, onUserCreate, onUserDelete }) {
         setShowAddUser(false);
     };
 
+    const onUserUpdateSubmitHandler = (e, userId) => {
+        onUserUpdateSubmit(e, userId);
+        setShowEditedUser(null);
+    };
+
     const onDeleteClick = (userId) => {
         setShowDeleteUser(userId);
     };
 
-    const onDeleteHandler = () =>{
+    const onDeleteHandler = () => {
         onUserDelete(showDeleteUser);
         onClose();
-    }
+    };
+
+    const onEditClick = async (userId) => {
+        const user = await userService.getOne(userId);
+
+        setShowEditedUser(user);
+    };
 
     return (
         <>
             {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
             {showAddUser && <EditCreate onClose={onClose} onUserCreate={onUserCreateHandler} />}
-            {showDeleteUser && (
-                <DeleteUser onClose={onClose} onDelete={onDeleteHandler} />
+            {showDeleteUser && <DeleteUser onClose={onClose} onDelete={onDeleteHandler} />}
+            {showEditedUser && (
+                <EditCreate
+                    user={showEditedUser}
+                    onClose={onClose}
+                    onUserCreate={onUserUpdateSubmitHandler}
+                />
             )}
 
             <div className="table-wrapper">
@@ -209,10 +228,11 @@ export function Table({ users, onUserCreate, onUserDelete }) {
                     <tbody>
                         {users.map((user) => (
                             <User
-                                key={user._id}
                                 {...user}
+                                key={user._id}
                                 onInfoClick={onInfoClick}
                                 onDeleteClick={onDeleteClick}
+                                onEditClick={onEditClick}
                             />
                         ))}
                     </tbody>
