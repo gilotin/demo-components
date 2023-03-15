@@ -5,7 +5,16 @@ import * as userService from "../../services/userService";
 import { EditCreate } from "../EditCreate";
 import { DeleteUser } from "../DeleteUser";
 
-export function Table({ users, onUserCreate, onUserDelete, onUserUpdateSubmit }) {
+export function Table({
+    users,
+    onUserCreate,
+    onUserDelete,
+    onUserUpdateSubmit,
+    formValues,
+    formChangeHandler,
+    formErrors,
+    formValidate,
+}) {
     const [selectedUser, setSelectedUser] = useState(null);
     const [showDeleteUser, setShowDeleteUser] = useState(null);
     const [showEditedUser, setShowEditedUser] = useState(null);
@@ -56,13 +65,26 @@ export function Table({ users, onUserCreate, onUserDelete, onUserUpdateSubmit })
     return (
         <>
             {selectedUser && <UserDetails {...selectedUser} onClose={onClose} />}
-            {showAddUser && <EditCreate onClose={onClose} onUserCreate={onUserCreateHandler} />}
+            {showAddUser && (
+                <EditCreate
+                    onClose={onClose}
+                    onUserCreate={onUserCreateHandler}
+                    formValues={formValues}
+                    formChangeHandler={formChangeHandler}
+                    formErrors={formErrors}
+                    formValidate={formValidate}
+                />
+            )}
             {showDeleteUser && <DeleteUser onClose={onClose} onDelete={onDeleteHandler} />}
             {showEditedUser && (
                 <EditCreate
                     user={showEditedUser}
                     onClose={onClose}
                     onUserCreate={onUserUpdateSubmitHandler}
+                    formValues={formValues}
+                    formChangeHandler={formChangeHandler}
+                    formErrors={formErrors}
+                    formValidate={formValidate}
                 />
             )}
 

@@ -1,4 +1,12 @@
-export function EditCreate({ onClose, onUserCreate, user }) {
+export function EditCreate({
+    onClose,
+    onUserCreate,
+    user,
+    formValues,
+    formChangeHandler,
+    formErrors,
+    formValidate
+}) {
     return (
         <div className="overlay">
             <div className="backdrop" onClick={onClose}></div>
@@ -36,12 +44,14 @@ export function EditCreate({ onClose, onUserCreate, user }) {
                                         id="firstName"
                                         name="firstName"
                                         type="text"
-                                        defaultValue={user?.firstName}
+                                        value={formValues.firstName}
+                                        onChange={formChangeHandler}
+                                        onBlur={formValidate}
                                     />
                                 </div>
-                                <p className="form-error">
-                                    First name should be at least 3 characters long!
-                                </p>
+                                {formErrors.firstName && (
+                                    <p className="form-error">{formErrors.firstName}</p>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last name</label>
@@ -53,12 +63,14 @@ export function EditCreate({ onClose, onUserCreate, user }) {
                                         id="lastName"
                                         name="lastName"
                                         type="text"
-                                        defaultValue={user?.lastName}
+                                        value={formValues.lastName}
+                                        onChange={formChangeHandler}
+                                        onBlur={formValidate}
                                     />
                                 </div>
-                                <p className="form-error">
-                                    Last name should be at least 3 characters long!
-                                </p>
+                                {formErrors.lastName && (
+                                    <p className="form-error">{formErrors.lastName}</p>
+                                )}
                             </div>
                         </div>
 
